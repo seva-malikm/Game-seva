@@ -10,7 +10,7 @@
 
   <style>
     :root {
-      --bg-color: #dc2626; /* ڕەنگی سووری گەش وەک ئەپەکە */
+      --bg-color: #dc2626;
       --card-radius: 20px;
     }
 
@@ -67,7 +67,7 @@
 
     .game-card {
       position: relative;
-      height: 180px;
+      height: 170px;
       border-radius: var(--card-radius);
       overflow: hidden;
       cursor: pointer;
@@ -85,11 +85,12 @@
 
     .card-konkan { background: linear-gradient(135deg, #1e293b, #0f172a); }
     .card-puzzle { background: linear-gradient(135deg, #e11d48, #facc15, #16a34a); }
+    .card-klawen { background: linear-gradient(135deg, #b45309, #78350f); }
 
     .card-icon-bg {
-      font-size: 3.8rem;
+      font-size: 3.5rem;
       position: absolute;
-      top: 25px;
+      top: 20px;
       left: 50%;
       transform: translateX(-50%);
       filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
@@ -113,7 +114,7 @@
       font-size: 0.8rem;
     }
 
-    /* Main Container for Game Views */
+    /* Game View Container */
     .game-view {
       background: rgba(15, 23, 42, 0.95);
       border-radius: 28px;
@@ -143,7 +144,6 @@
       cursor: pointer;
     }
 
-    /* Shared Background Elements */
     .board-wrapper {
       position: relative; width: 100%; border-radius: 20px;
       overflow: hidden; margin-bottom: 15px; border: 2px solid rgba(255,255,255,0.2);
@@ -187,6 +187,23 @@
     .deck-pile { background: linear-gradient(135deg, #1e293b, #0f172a); color: #facc15; }
     .discard-pile { background: rgba(255,255,255,0.1); color: #fff; }
 
+    /* 3. Klawen Game Styling (٨ کڵاو) */
+    .klawen-board {
+      position: relative; z-index: 3; display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 12px; padding: 15px; min-height: 320px; background: rgba(15, 23, 42, 0.45); backdrop-filter: blur(4px);
+      align-content: center;
+    }
+    .klaw-item {
+      height: 90px; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(250, 204, 21, 0.5);
+      border-radius: 16px; display: flex; flex-direction: column; justify-content: center; align-items: center;
+      cursor: pointer; transition: transform 0.2s, background 0.3s; position: relative;
+    }
+    .klaw-item:active { transform: scale(0.9); }
+    .klaw-icon { font-size: 2.5rem; transition: transform 0.3s; }
+    .klaw-item.open .klaw-icon { transform: translateY(-15px); }
+    .stone-found { font-size: 1.5rem; position: absolute; bottom: 8px; }
+    .klaw-item.empty-klaw { opacity: 0.5; border-color: transparent; }
+
     .action-btn {
       width: 100%; padding: 12px; border: none; border-radius: 14px;
       background: linear-gradient(135deg, #e11d48, #facc15, #16a34a);
@@ -198,7 +215,7 @@
 
   <div class="app-container">
     
-    <!-- HOME GRID (وەک وێنەکەی داتناوە) -->
+    <!-- HOME GRID -->
     <div id="homeView">
       <div class="top-bar">
         <div class="top-btn">⚙️</div>
@@ -220,6 +237,13 @@
           <div class="card-icon-bg">🧩</div>
           <div class="card-title">مەتەڵی فکری</div>
         </div>
+
+        <!-- 3. Klawen Game Card (کڵاوێن) -->
+        <div class="game-card card-klawen" onclick="openGame('klawenGame')">
+          <div class="favorite-icon">❤️</div>
+          <div class="card-icon-bg">👳‍♂️</div>
+          <div class="card-title">کڵاو کڵاوێن</div>
+        </div>
       </div>
     </div>
 
@@ -229,34 +253,28 @@
         <h3 style="color: #facc15;">🃏 یاری کۆنکان (AI)</h3>
         <button class="close-btn" onclick="closeGame()">✕</button>
       </div>
-
       <div style="font-size: 0.85rem; color: #facc15; margin-bottom: 8px;" id="konkanStatus">یاری دەستی پێکرد!</div>
-
       <div class="board-wrapper">
         <div class="kurdistan-bg">
           <div class="flag-red"></div>
           <div class="flag-white"><div class="kurdistan-sun"></div></div>
           <div class="flag-green"></div>
         </div>
-        
         <div class="konkan-board">
           <div>
             <span style="font-size: 0.75rem; color: #cbd5e1;">دەستی AI:</span>
             <div class="card-hand" id="botHand"></div>
           </div>
-
           <div class="center-table">
             <div class="deck-pile" id="deckPile" onclick="drawCardFromDeck()">🂠<br>دێک</div>
             <div class="discard-pile" id="discardPile" onclick="drawCardFromDiscard()">سەردێک</div>
           </div>
-
           <div>
             <span style="font-size: 0.75rem; color: #cbd5e1;">دەستی تۆ:</span>
             <div class="card-hand" id="playerHand"></div>
           </div>
         </div>
       </div>
-
       <button class="action-btn" onclick="discardSelectedCard()">فڕێدانی کارت</button>
     </div>
 
@@ -266,7 +284,6 @@
         <h3 style="color: #facc15;">🧩 مەتەڵی ژمارەکان</h3>
         <button class="close-btn" onclick="closeGame()">✕</button>
       </div>
-      
       <div class="board-wrapper">
         <div class="kurdistan-bg">
           <div class="flag-red"></div>
@@ -275,8 +292,25 @@
         </div>
         <div class="board puzzle-board" id="board"></div>
       </div>
-
       <button class="action-btn" id="shuffleBtn">تێکەڵکردنەوە</button>
+    </div>
+
+    <!-- KLAWEN GAME VIEW (کڵاوێن) -->
+    <div id="klawenGame" class="game-view hidden">
+      <div class="back-nav">
+        <h3 style="color: #facc15;">👳‍♂️ یاری کڵاو کڵاوێن</h3>
+        <button class="close-btn" onclick="closeGame()">✕</button>
+      </div>
+      <div style="font-size: 0.85rem; color: #facc15; margin-bottom: 8px;" id="klawenStatus">بەردەکە لەژێر یەکێک لە ٨ کڵاوەکەیە!</div>
+      <div class="board-wrapper">
+        <div class="kurdistan-bg">
+          <div class="flag-red"></div>
+          <div class="flag-white"><div class="kurdistan-sun"></div></div>
+          <div class="flag-green"></div>
+        </div>
+        <div class="klawen-board" id="klawenBoard"></div>
+      </div>
+      <button class="action-btn" onclick="initKlawen()">شاردمەوە (یاری نوێ)</button>
     </div>
 
   </div>
@@ -287,19 +321,61 @@
       document.getElementById('homeView').classList.add('hidden');
       document.getElementById('puzzleGame').classList.add('hidden');
       document.getElementById('konkanGame').classList.add('hidden');
+      document.getElementById('klawenGame').classList.add('hidden');
       
       document.getElementById(gameId).classList.remove('hidden');
 
       if(gameId === 'konkanGame') initKonkan();
+      if(gameId === 'klawenGame') initKlawen();
     }
 
     function closeGame() {
       document.getElementById('puzzleGame').classList.add('hidden');
       document.getElementById('konkanGame').classList.add('hidden');
+      document.getElementById('klawenGame').classList.add('hidden');
       document.getElementById('homeView').classList.remove('hidden');
     }
 
-    /* --- 1. KONKAN GAME LOGIC --- */
+    /* --- 1. KLAWEN GAME LOGIC (کڵاوێن) --- */
+    let stoneIndex = -1;
+    let attempts = 0;
+    let isGameOver = false;
+
+    function initKlawen() {
+      const board = document.getElementById('klawenBoard');
+      board.innerHTML = '';
+      stoneIndex = Math.floor(Math.random() * 8); // بەردەکە لەژێر یەکێک لە ٨ کڵاوەکەیە
+      attempts = 0;
+      isGameOver = false;
+      document.getElementById('klawenStatus').innerText = "بەردەکە شاردرایەوە! کلیک لە کڵاوێک بکە";
+
+      for (let i = 0; i < 8; i++) {
+        const klaw = document.createElement('div');
+        klaw.className = 'klaw-item';
+        klaw.innerHTML = `<div class="klaw-icon">👳‍♂️</div><div class="stone-found"></div>`;
+        klaw.onclick = () => checkKlaw(i, klaw);
+        board.appendChild(klaw);
+      }
+    }
+
+    function checkKlaw(index, element) {
+      if (isGameOver || element.classList.contains('open')) return;
+
+      attempts++;
+      element.classList.add('open');
+
+      if (index === stoneIndex) {
+        element.querySelector('.stone-found').innerText = '💎';
+        document.getElementById('klawenStatus').innerText = `ئافەرین! بەردەکەت دۆزییەوە لە هەوڵی (${attempts})مدا 🎉`;
+        isGameOver = true;
+      } else {
+        element.querySelector('.stone-found').innerText = '❌';
+        element.classList.add('empty-klaw');
+        document.getElementById('klawenStatus').innerText = `بەردەکە لێرە نییە! هەوڵی (${attempts})`;
+      }
+    }
+
+    /* --- 2. KONKAN GAME LOGIC --- */
     const suits = ['♠', '♥️', '♣', '♦'];
     const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
     let deck = [], playerHand = [], botHand = [], discardPile = [];
@@ -418,7 +494,7 @@
       setStatus("نۆبەی تۆیە! کارتێک بکێشە");
     }
 
-    /* --- 2. PUZZLE GAME LOGIC --- */
+    /* --- 3. PUZZLE GAME LOGIC --- */
     const board = document.getElementById('board');
     let tiles = [];
 
