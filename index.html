@@ -10,12 +10,9 @@
 
   <style>
     :root {
-      --bg-gradient: radial-gradient(circle at top left, #0f172a, #1e1b4b, #020617);
-      --card-bg: rgba(15, 23, 42, 0.7);
-      --accent-color: #38bdf8;
-      --accent-glow: 0 0 25px rgba(56, 189, 248, 0.4);
-      --tile-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
-      --tile-border: rgba(255, 255, 255, 0.15);
+      --bg-gradient: radial-gradient(circle at center, #0f172a, #020617);
+      --card-bg: rgba(15, 23, 42, 0.75);
+      --accent-color: #facc15;
       --text-color: #f8fafc;
     }
 
@@ -34,27 +31,27 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
+      padding: 15px;
     }
 
     .container {
       width: 100%;
-      max-width: 400px;
+      max-width: 410px;
       background: var(--card-bg);
-      padding: 28px 24px;
+      padding: 24px;
       border-radius: 32px;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), var(--accent-glow);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(250, 204, 21, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       text-align: center;
     }
 
     h1 {
-      font-size: 1.75rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      font-size: 1.7rem;
+      font-weight: 800;
+      margin-bottom: 18px;
+      background: linear-gradient(135deg, #e11d48, #facc15, #16a34a);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: -0.5px;
@@ -64,72 +61,137 @@
       display: flex;
       justify-content: space-between;
       margin-bottom: 20px;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 14px 20px;
-      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 12px 18px;
+      border-radius: 18px;
       font-size: 0.95rem;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .stats b {
       color: var(--accent-color);
     }
 
+    /* پاشبنەمای تەختەی یارییەکە بە شێوازی ئاڵای کوردستان */
+    .board-wrapper {
+      position: relative;
+      width: 100%;
+      height: 350px;
+      border-radius: 24px;
+      overflow: hidden;
+      margin-bottom: 22px;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    .kurdistan-bg {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      z-index: 1;
+    }
+
+    .flag-red {
+      flex: 1;
+      background: #e11d48;
+    }
+
+    .flag-white {
+      flex: 1;
+      background: #ffffff;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .flag-green {
+      flex: 1;
+      background: #16a34a;
+    }
+
+    /* خۆری کوردستان لە ناوەڕاستدا */
+    .kurdistan-sun {
+      position: absolute;
+      width: 110px;
+      height: 110px;
+      background: radial-gradient(circle, #facc15 40%, #eab308 100%);
+      border-radius: 50%;
+      box-shadow: 0 0 30px #facc15, 0 0 60px #facc15;
+      z-index: 2;
+    }
+
     .board {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       grid-template-rows: repeat(4, 1fr);
-      gap: 12px;
-      width: 100%;
-      height: 350px;
-      background: rgba(0, 0, 0, 0.25);
-      padding: 14px;
-      border-radius: 24px;
-      margin-bottom: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      gap: 10px;
+      padding: 12px;
+      z-index: 3;
+      background: rgba(15, 23, 42, 0.35);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
     }
 
     .tile {
-      background: var(--tile-bg);
-      color: #fff;
+      color: #ffffff;
       font-size: 1.6rem;
-      font-weight: 700;
+      font-weight: 800;
       display: flex;
       justify-content: center;
       align-items: center;
       border-radius: 16px;
       cursor: pointer;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid var(--tile-border);
-      transition: all 0.15s ease;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
 
     .tile:active {
       transform: scale(0.92);
-      background: rgba(56, 189, 248, 0.3);
-      border-color: var(--accent-color);
     }
 
     .tile.empty {
-      background: transparent;
-      box-shadow: none;
-      border: none;
+      background: transparent !important;
+      box-shadow: none !important;
+      border: none !important;
       cursor: default;
     }
+
+    /* ڕەنگی جیاواز و درەوشاوە بۆ هەر ژمارەیەک بە جودا */
+    .t-1  { background: rgba(239, 68, 68, 0.65); }  /* سوور */
+    .t-2  { background: rgba(249, 115, 22, 0.65); } /* پرتەقاڵی */
+    .t-3  { background: rgba(245, 158, 11, 0.65); } /* زەرد */
+    .t-4  { background: rgba(16, 185, 129, 0.65); } /* سەوز */
+    .t-5  { background: rgba(6, 182, 212, 0.65); }  /* فیرۆزەیی */
+    .t-6  { background: rgba(59, 130, 246, 0.65); } /* شین */
+    .t-7  { background: rgba(99, 102, 241, 0.65); } /* نیللی */
+    .t-8  { background: rgba(139, 92, 246, 0.65); } /* مۆر */
+    .t-9  { background: rgba(217, 70, 239, 0.65); } /* پەمەیی */
+    .t-10 { background: rgba(244, 63, 94, 0.65); }  /* ئاڵ */
+    .t-11 { background: rgba(20, 184, 166, 0.65); } /* سەوزی ئاوی */
+    .t-12 { background: rgba(234, 179, 8, 0.65); }  /* زێڕینی گەش */
+    .t-13 { background: rgba(168, 85, 247, 0.65); } /* مۆری گەش */
+    .t-14 { background: rgba(14, 165, 233, 0.65); } /* شینی ئاسمانی */
+    .t-15 { background: rgba(34, 197, 94, 0.65); }  /* سەوزی تۆخ */
 
     button {
       width: 100%;
       padding: 16px;
       border: none;
       border-radius: 20px;
-      background: linear-gradient(135deg, #0284c7, #6366f1);
-      color: #fff;
-      font-size: 1.05rem;
-      font-weight: 700;
+      background: linear-gradient(135deg, #e11d48, #facc15, #16a34a);
+      color: #0f172a;
+      font-size: 1.1rem;
+      font-weight: 800;
       cursor: pointer;
-      box-shadow: 0 12px 24px rgba(99, 102, 241, 0.35);
+      box-shadow: 0 10px 25px rgba(250, 204, 21, 0.3);
       transition: all 0.2s ease;
     }
 
@@ -159,14 +221,14 @@
     }
 
     .modal {
-      background: rgba(30, 41, 59, 0.9);
+      background: rgba(30, 41, 59, 0.95);
       padding: 32px 24px;
       border-radius: 28px;
       text-align: center;
       max-width: 320px;
       width: 90%;
-      border: 1px solid var(--accent-color);
-      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+      border: 2px solid var(--accent-color);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.6);
     }
 
     .modal h2 {
@@ -191,7 +253,17 @@
       <span>جوڵەکان: <b id="moves">0</b></span>
     </div>
 
-    <div class="board" id="board"></div>
+    <!-- پاشبنەمای ئاڵای کوردستان -->
+    <div class="board-wrapper">
+      <div class="kurdistan-bg">
+        <div class="flag-red"></div>
+        <div class="flag-white">
+          <div class="kurdistan-sun"></div>
+        </div>
+        <div class="flag-green"></div>
+      </div>
+      <div class="board" id="board"></div>
+    </div>
 
     <button id="shuffleBtn">تێکەڵکردنەوە و دەستپێک</button>
   </div>
@@ -234,6 +306,7 @@
           tile.classList.add('empty');
         } else {
           tile.innerText = num;
+          tile.classList.add(`t-${num}`); // دانانی کلاسی ڕەنگی تایبەت بە ژمارەکە
           tile.onclick = () => moveTile(index);
         }
         board.appendChild(tile);
