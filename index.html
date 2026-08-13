@@ -76,6 +76,10 @@
     .card-konkan { background: linear-gradient(135deg, #1e293b, #0f172a); }
     .card-puzzle { background: linear-gradient(135deg, #e11d48, #facc15, #16a34a); }
     .card-klawen { background: linear-gradient(135deg, #b45309, #78350f); }
+    .card-word { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
+    .card-memory { background: linear-gradient(135deg, #059669, #047857); }
+    .card-rps { background: linear-gradient(135deg, #d97706, #b45309); }
+    .card-code { background: linear-gradient(135deg, #4c1d95, #312e81); }
 
     .card-icon-bg {
       font-size: 3.5rem; position: absolute;
@@ -84,7 +88,7 @@
     }
 
     .card-title {
-      font-size: 1.2rem; font-weight: 900; color: #fff;
+      font-size: 1.1rem; font-weight: 900; color: #fff;
       text-shadow: 0 2px 5px rgba(0,0,0,0.6); z-index: 2;
     }
 
@@ -127,6 +131,12 @@
     .flag-green { flex: 1; background: #16a34a; }
     .kurdistan-sun { position: absolute; width: 80px; height: 80px; background: radial-gradient(circle, #facc15 40%, #eab308 100%); border-radius: 50%; box-shadow: 0 0 20px #facc15; z-index: 2; }
 
+    .score-board {
+      display: flex; justify-content: space-around; background: rgba(0,0,0,0.5);
+      padding: 10px; border-radius: 14px; margin-bottom: 10px; font-weight: bold; font-size: 1rem;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
     /* 1. Puzzle Game Styling */
     .puzzle-board {
       position: relative; z-index: 3; display: grid; grid-template-columns: repeat(4, 1fr);
@@ -160,7 +170,7 @@
     .deck-pile { background: linear-gradient(135deg, #1e293b, #0f172a); color: #facc15; }
     .discard-pile { background: rgba(255,255,255,0.1); color: #fff; }
 
-    /* 3. Klawen Game Styling (٩ کڵاوی نەخشێنراو) */
+    /* 3. Klawen Game Styling */
     .klawen-board {
       position: relative; z-index: 3; display: grid; grid-template-columns: repeat(3, 1fr);
       gap: 12px; padding: 12px; min-height: 330px; background: rgba(15, 23, 42, 0.55); backdrop-filter: blur(4px);
@@ -181,34 +191,94 @@
     .stone-found { font-size: 1.4rem; position: absolute; bottom: 4px; }
     .klaw-item.empty-klaw { opacity: 0.4; border-color: transparent; }
 
-    .score-board {
-      display: flex; justify-content: space-around; background: rgba(0,0,0,0.5);
-      padding: 10px; border-radius: 14px; margin-bottom: 10px; font-weight: bold; font-size: 1rem;
-      border: 1px solid rgba(255,255,255,0.15);
-    }
-
-    /* Selection Buttons BEFORE picking hat */
-    .choice-controls {
-      display: flex; gap: 10px; margin-bottom: 10px;
-    }
+    .choice-controls { display: flex; gap: 10px; margin-bottom: 10px; }
     .btn-choice {
       flex: 1; padding: 12px; border: 2px solid transparent; border-radius: 12px;
-      font-weight: bold; cursor: pointer; font-size: 0.95rem; opacity: 0.6;
-      transition: all 0.2s;
+      font-weight: bold; cursor: pointer; font-size: 0.95rem; opacity: 0.6; transition: all 0.2s;
     }
-    .btn-choice.active-gol {
-      background: #22c55e; color: #fff; opacity: 1; border-color: #fff;
-      box-shadow: 0 0 12px rgba(34, 197, 94, 0.8);
+    .btn-choice.active-gol { background: #22c55e; color: #fff; opacity: 1; border-color: #fff; box-shadow: 0 0 12px rgba(34, 197, 94, 0.8); }
+    .btn-choice.active-fit { background: #ef4444; color: #fff; opacity: 1; border-color: #fff; box-shadow: 0 0 12px rgba(239, 68, 68, 0.8); }
+
+    /* 4. Word Game Styling */
+    .word-board {
+      position: relative; z-index: 3; padding: 20px 15px; min-height: 300px;
+      background: rgba(15, 23, 42, 0.55); backdrop-filter: blur(4px);
+      display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 15px;
     }
-    .btn-choice.active-fit {
-      background: #ef4444; color: #fff; opacity: 1; border-color: #fff;
-      box-shadow: 0 0 12px rgba(239, 68, 68, 0.8);
+    .scrambled-letters {
+      font-size: 1.8rem; font-weight: 900; letter-spacing: 6px; color: #facc15;
+      background: rgba(0,0,0,0.4); padding: 10px 20px; border-radius: 12px;
+      border: 1px solid rgba(250, 204, 21, 0.3); text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+    .word-hint { font-size: 0.95rem; color: #e2e8f0; margin-bottom: 5px; }
+    .word-input {
+      width: 100%; max-width: 250px; padding: 12px; border-radius: 12px;
+      border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.9);
+      color: #0f172a; font-size: 1.2rem; font-weight: bold; text-align: center; outline: none;
+    }
+
+    /* 5. Memory Game Styling */
+    .memory-board {
+      position: relative; z-index: 3; display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 10px; padding: 12px; min-height: 330px; background: rgba(15, 23, 42, 0.55); backdrop-filter: blur(4px);
+      align-content: center;
+    }
+    .mem-card {
+      height: 75px; background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.25);
+      border-radius: 14px; display: flex; justify-content: center; align-items: center;
+      font-size: 2rem; cursor: pointer; transition: transform 0.3s, background 0.3s;
+    }
+    .mem-card.flipped { background: rgba(255, 255, 255, 0.9); border-color: #facc15; transform: rotateY(180deg); }
+    .mem-card.matched { background: rgba(34, 197, 94, 0.3); border-color: #22c55e; cursor: default; }
+
+    /* 6. Rock Paper Scissors Styling */
+    .rps-board {
+      position: relative; z-index: 3; padding: 20px; min-height: 300px;
+      background: rgba(15, 23, 42, 0.55); backdrop-filter: blur(4px);
+      display: flex; flex-direction: column; justify-content: space-around; align-items: center;
+    }
+    .rps-display { display: flex; justify-content: space-around; width: 100%; margin-bottom: 20px; }
+    .rps-box { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .rps-icon-large {
+      width: 70px; height: 70px; background: rgba(255,255,255,0.1); border-radius: 50%;
+      display: flex; justify-content: center; align-items: center; font-size: 2.5rem;
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+    .rps-options { display: flex; gap: 15px; }
+    .rps-btn {
+      width: 65px; height: 65px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.2); font-size: 1.8rem; cursor: pointer;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .rps-btn:active { transform: scale(0.9); background: rgba(250, 204, 21, 0.4); }
+
+    /* 7. Codebreaker Game Styling */
+    .code-board {
+      position: relative; z-index: 3; padding: 15px; min-height: 320px;
+      background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+    }
+    .code-slots { display: flex; gap: 10px; margin-bottom: 5px; }
+    .code-slot {
+      width: 45px; height: 50px; background: rgba(255,255,255,0.1); border: 2px dashed rgba(255,255,255,0.4);
+      border-radius: 10px; display: flex; justify-content: center; align-items: center;
+      font-size: 1.4rem; font-weight: bold; color: #facc15;
+    }
+    .num-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; max-width: 240px; }
+    .num-btn {
+      padding: 10px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 10px; color: #fff; font-size: 1.2rem; font-weight: bold; cursor: pointer;
+    }
+    .num-btn:active { background: #facc15; color: #000; }
+    .history-log {
+      width: 100%; max-height: 120px; overflow-y: auto; background: rgba(0,0,0,0.3);
+      border-radius: 10px; padding: 8px; font-size: 0.85rem; text-align: right;
     }
 
     .action-btn {
       width: 100%; padding: 12px; border: none; border-radius: 14px;
       background: linear-gradient(135deg, #e11d48, #facc15, #16a34a);
-      color: #0f172a; font-size: 1rem; font-weight: 800; cursor: pointer;
+      color: #0f172a; font-size: 1rem; font-weight: 800; cursor: pointer; margin-top: 5px;
     }
   </style>
 </head>
@@ -234,13 +304,37 @@
         <div class="game-card card-puzzle" onclick="openGame('puzzleGame')">
           <div class="favorite-icon">❤️</div>
           <div class="card-icon-bg">🧩</div>
-          <div class="card-title">مەتەڵی فکری</div>
+          <div class="card-title">مەتەڵی ژمارەکان</div>
         </div>
 
         <div class="game-card card-klawen" onclick="openGame('klawenGame')">
           <div class="favorite-icon">❤️</div>
           <div class="card-icon-bg">👑</div>
           <div class="card-title">کڵاو کڵاوێن</div>
+        </div>
+
+        <div class="game-card card-word" onclick="openGame('wordGame')">
+          <div class="favorite-icon">❤️</div>
+          <div class="card-icon-bg">📝</div>
+          <div class="card-title">مەتەڵی وشەکان</div>
+        </div>
+
+        <div class="game-card card-memory" onclick="openGame('memoryGame')">
+          <div class="favorite-icon">❤️</div>
+          <div class="card-icon-bg">🖼️</div>
+          <div class="card-title">دۆزینەوەی وێنەکان</div>
+        </div>
+
+        <div class="game-card card-rps" onclick="openGame('rpsGame')">
+          <div class="favorite-icon">❤️</div>
+          <div class="card-icon-bg">✂️</div>
+          <div class="card-title">بەرد، پەڕە، مەقەست</div>
+        </div>
+
+        <div class="game-card card-code" onclick="openGame('codeGame')">
+          <div class="favorite-icon">❤️</div>
+          <div class="card-icon-bg">🔑</div>
+          <div class="card-title">شکاندنی کۆد (کلیل)</div>
         </div>
       </div>
     </div>
@@ -293,7 +387,7 @@
       <button class="action-btn" id="shuffleBtn">تێکەڵکردنەوە</button>
     </div>
 
-    <!-- KLAWEN GAME VIEW (٩ کڵاوێن) -->
+    <!-- KLAWEN GAME VIEW -->
     <div id="klawenGame" class="game-view hidden">
       <div class="back-nav">
         <h3 style="color: #facc15;">👑 یاری کڵاو کڵاوێن (٩ کڵاو)</h3>
@@ -305,7 +399,6 @@
         <span style="color: #f87171;">فت ❌: <span id="fitCount">0</span></span>
       </div>
 
-      <!-- MUST CHOOSE BEFORE PICKING HAT -->
       <div class="choice-controls">
         <button class="btn-choice" id="choiceGolBtn" onclick="setPlayerChoice('gol')">🌸 گوڵ دەکەم</button>
         <button class="btn-choice" id="choiceFitBtn" onclick="setPlayerChoice('fit')">❌ فت دەکەم</button>
@@ -325,6 +418,153 @@
       <button class="action-btn" id="newRoundBtn" onclick="initKlawen()">شاردمەوە (دەستێکی نوێ)</button>
     </div>
 
+    <!-- WORD PUZZLE GAME VIEW -->
+    <div id="wordGame" class="game-view hidden">
+      <div class="back-nav">
+        <h3 style="color: #facc15;">📝 مەتەڵی وشەکان</h3>
+        <button class="close-btn" onclick="closeGame()">✕</button>
+      </div>
+
+      <div class="score-board">
+        <span style="color: #facc15;">خاڵ ⭐️: <span id="wordScore">0</span></span>
+      </div>
+
+      <div style="font-size: 0.85rem; color: #facc15; margin-bottom: 8px;" id="wordStatus">پیتەکان بەیەکەوە ڕێکبخەرەوە!</div>
+
+      <div class="board-wrapper">
+        <div class="kurdistan-bg">
+          <div class="flag-red"></div>
+          <div class="flag-white"><div class="kurdistan-sun"></div></div>
+          <div class="flag-green"></div>
+        </div>
+        <div class="word-board">
+          <div class="scrambled-letters" id="scrambledText">---</div>
+          <div class="word-hint" id="wordHint">ڕێنمایی: ---</div>
+          <input type="text" class="word-input" id="wordGuessInput" placeholder="وشەکە بنووسە..." autocomplete="off">
+        </div>
+      </div>
+
+      <button class="action-btn" onclick="checkWordGuess()">پشکنین</button>
+      <button class="action-btn" style="background: rgba(255,255,255,0.2); color:#fff;" onclick="nextWord()">وشەی نوێ</button>
+    </div>
+
+    <!-- MEMORY GAME VIEW -->
+    <div id="memoryGame" class="game-view hidden">
+      <div class="back-nav">
+        <h3 style="color: #facc15;">🖼️ دۆزینەوەی وێنەکان</h3>
+        <button class="close-btn" onclick="closeGame()">✕</button>
+      </div>
+
+      <div class="score-board">
+        <span style="color: #4ade80;">جووتە دۆزراوەکان 🎯: <span id="memMatches">0</span> / 6</span>
+        <span style="color: #facc15;">تەقەلا 🔄: <span id="memAttempts">0</span></span>
+      </div>
+
+      <div style="font-size: 0.85rem; color: #facc15; margin-bottom: 8px;" id="memStatus">وێنە هاوشێوەکان بدۆزەرەوە!</div>
+
+      <div class="board-wrapper">
+        <div class="kurdistan-bg">
+          <div class="flag-red"></div>
+          <div class="flag-white"><div class="kurdistan-sun"></div></div>
+          <div class="flag-green"></div>
+        </div>
+        <div class="memory-board" id="memoryBoard"></div>
+      </div>
+
+      <button class="action-btn" onclick="initMemoryGame()">دەستپێکردنەوەی یاری</button>
+    </div>
+
+    <!-- ROCK PAPER SCISSORS GAME VIEW -->
+    <div id="rpsGame" class="game-view hidden">
+      <div class="back-nav">
+        <h3 style="color: #facc15;">✂️ بەرد، پەڕە، مەقەست</h3>
+        <button class="close-btn" onclick="closeGame()">✕</button>
+      </div>
+
+      <div class="score-board">
+        <span style="color: #4ade80;">تۆ 👤: <span id="rpsPlayerScore">0</span></span>
+        <span style="color: #f87171;">🤖 AI: <span id="rpsBotScore">0</span></span>
+      </div>
+
+      <div style="font-size: 0.85rem; color: #facc15; margin-bottom: 8px;" id="rpsStatus">یەکێک لە بژاردەکان هەڵبژێرە!</div>
+
+      <div class="board-wrapper">
+        <div class="kurdistan-bg">
+          <div class="flag-red"></div>
+          <div class="flag-white"><div class="kurdistan-sun"></div></div>
+          <div class="flag-green"></div>
+        </div>
+        <div class="rps-board">
+          <div class="rps-display">
+            <div class="rps-box">
+              <span style="font-size: 0.8rem; color: #cbd5e1;">هەڵبژاردنی تۆ</span>
+              <div class="rps-icon-large" id="rpsPlayerChoice">❓</div>
+            </div>
+            <div class="rps-box">
+              <span style="font-size: 0.8rem; color: #cbd5e1;">هەڵبژاردنی AI</span>
+              <div class="rps-icon-large" id="rpsBotChoice">❓</div>
+            </div>
+          </div>
+
+          <div class="rps-options">
+            <button class="rps-btn" onclick="playRPS('rock')">🪨</button>
+            <button class="rps-btn" onclick="playRPS('paper')">📄</button>
+            <button class="rps-btn" onclick="playRPS('scissors')">✂️</button>
+          </div>
+        </div>
+      </div>
+
+      <button class="action-btn" onclick="resetRPS()">دەستپێکردنەوەی خاڵەکان</button>
+    </div>
+
+    <!-- CODEBREAKER GAME VIEW -->
+    <div id="codeGame" class="game-view hidden">
+      <div class="back-nav">
+        <h3 style="color: #facc15;">🔑 یاری کلیل (شکاندنی کۆد)</h3>
+        <button class="close-btn" onclick="closeGame()">✕</button>
+      </div>
+
+      <div class="score-board">
+        <span style="color: #facc15;">تەقەلاکان: <span id="codeAttempts">0</span> / 8</span>
+      </div>
+
+      <div style="font-size: 0.85rem; color: #facc15; margin-bottom: 8px;" id="codeStatus">کۆدە نهێنییەکەی ٤ ژمارەیی پێشبینی بکە!</div>
+
+      <div class="board-wrapper">
+        <div class="kurdistan-bg">
+          <div class="flag-red"></div>
+          <div class="flag-white"><div class="kurdistan-sun"></div></div>
+          <div class="flag-green"></div>
+        </div>
+        <div class="code-board">
+          <div class="code-slots">
+            <div class="code-slot" id="cslot-0">?</div>
+            <div class="code-slot" id="cslot-1">?</div>
+            <div class="code-slot" id="cslot-2">?</div>
+            <div class="code-slot" id="cslot-3">?</div>
+          </div>
+
+          <div class="num-pad">
+            <button class="num-btn" onclick="pressCodeNum(1)">1</button>
+            <button class="num-btn" onclick="pressCodeNum(2)">2</button>
+            <button class="num-btn" onclick="pressCodeNum(3)">3</button>
+            <button class="num-btn" onclick="pressCodeNum(4)">4</button>
+            <button class="num-btn" onclick="pressCodeNum(5)">5</button>
+            <button class="num-btn" onclick="pressCodeNum(6)">6</button>
+          </div>
+
+          <div style="display:flex; gap:10px; width:100%;">
+            <button class="action-btn" style="background:#e11d48; padding:8px;" onclick="clearCodeInput()">سڕینەوە</button>
+            <button class="action-btn" style="padding:8px;" onclick="submitCodeGuess()">پشکنینی کۆد</button>
+          </div>
+
+          <div class="history-log" id="codeHistory"></div>
+        </div>
+      </div>
+
+      <button class="action-btn" onclick="initCodeGame()">کۆدێکی نوێ (دەستپێکردنەوە)</button>
+    </div>
+
   </div>
 
   <script>
@@ -334,25 +574,37 @@
       document.getElementById('puzzleGame').classList.add('hidden');
       document.getElementById('konkanGame').classList.add('hidden');
       document.getElementById('klawenGame').classList.add('hidden');
+      document.getElementById('wordGame').classList.add('hidden');
+      document.getElementById('memoryGame').classList.add('hidden');
+      document.getElementById('rpsGame').classList.add('hidden');
+      document.getElementById('codeGame').classList.add('hidden');
       
       document.getElementById(gameId).classList.remove('hidden');
 
       if(gameId === 'konkanGame') initKonkan();
       if(gameId === 'klawenGame') initKlawen();
+      if(gameId === 'wordGame') initWordGame();
+      if(gameId === 'memoryGame') initMemoryGame();
+      if(gameId === 'rpsGame') initRPS();
+      if(gameId === 'codeGame') initCodeGame();
     }
 
     function closeGame() {
       document.getElementById('puzzleGame').classList.add('hidden');
       document.getElementById('konkanGame').classList.add('hidden');
       document.getElementById('klawenGame').classList.add('hidden');
+      document.getElementById('wordGame').classList.add('hidden');
+      document.getElementById('memoryGame').classList.add('hidden');
+      document.getElementById('rpsGame').classList.add('hidden');
+      document.getElementById('codeGame').classList.add('hidden');
       document.getElementById('homeView').classList.remove('hidden');
     }
 
-    /* --- 1. KLAWEN GAME LOGIC (دیاریکردن پێش هەڵگرتنی کڵاو) --- */
+    /* --- 1. KLAWEN GAME LOGIC --- */
     let stoneIndex = -1;
     let attempts = 0;
     let isGameOver = false;
-    let selectedChoice = null; // 'gol' or 'fit'
+    let selectedChoice = null;
     let golScore = 0;
     let fitScore = 0;
 
@@ -376,21 +628,19 @@
       isGameOver = false;
       selectedChoice = null;
 
-      // Reset choice buttons UI
       document.getElementById('choiceGolBtn').className = 'btn-choice';
       document.getElementById('choiceFitBtn').className = 'btn-choice';
       document.getElementById('klawenStatus').innerText = "تکایە پێشوەختە لە سەرەوە هەڵبژێرم: گوڵ یان فت؟";
 
       for (let i = 0; i < 9; i++) {
         const klaw = document.createElement('div');
-        klaw.className = 'klaw-item disabled'; // Disable until choice is made
+        klaw.className = 'klaw-item disabled';
         klaw.innerHTML = `${capSVGs[i]}<div class="stone-found"></div>`;
         klaw.onclick = () => checkKlaw(i, klaw);
         board.appendChild(klaw);
       }
     }
 
-    // Set Choice BEFORE clicking any hat
     function setPlayerChoice(choice) {
       if(isGameOver) return;
       selectedChoice = choice;
@@ -408,7 +658,6 @@
         document.getElementById('klawenStatus').innerText = "❌ ف تت هەڵبژارد! ئێستا کلیک لە کڵاوێک بکە";
       }
 
-      // Enable hats
       document.querySelectorAll('.klaw-item').forEach(el => el.classList.remove('disabled'));
     }
 
@@ -607,6 +856,269 @@
       }
       renderPuzzle();
     };
+
+    /* --- 4. WORD PUZZLE GAME LOGIC --- */
+    const wordList = [
+      { word: "کوردستان", hint: "نیشتمانی کوردان" },
+      { word: "سلێمانی", hint: "شارێکی باشووری کوردستان" },
+      { word: "هەولێر", hint: "پایتەختی هەرێمی کوردستان" },
+      { word: "کامپیوتەر", hint: "ئامێرێکی ئەلیکترۆنی زیرەک" },
+      { word: "ئاسمان", hint: "ڕەنگی شینە و ئه‌ستێره‌ی تێدایه‌" },
+      { word: "خۆر", hint: "سەرچاوەی ڕووناکی و گەرمی زەوی" },
+      { word: "پەڕتووک", hint: "سەرچاوەی زانست و خوێندنەوە" }
+    ];
+
+    let currentWordObj = null;
+    let wordScore = 0;
+
+    function initWordGame() {
+      nextWord();
+    }
+
+    function nextWord() {
+      document.getElementById('wordGuessInput').value = '';
+      document.getElementById('wordStatus').innerText = "پیتەکان بەیەکەوە ڕێکبخەرەوە!";
+      document.getElementById('wordStatus').style.color = "#facc15";
+
+      const randIdx = Math.floor(Math.random() * wordList.length);
+      currentWordObj = wordList[randIdx];
+
+      let letters = currentWordObj.word.split('');
+      do {
+        letters.sort(() => Math.random() - 0.5);
+      } while (letters.join('') === currentWordObj.word && letters.length > 1);
+
+      document.getElementById('scrambledText').innerText = letters.join(' ');
+      document.getElementById('wordHint').innerText = "ڕێنمایی: " + currentWordObj.hint;
+    }
+
+    function checkWordGuess() {
+      const userGuess = document.getElementById('wordGuessInput').value.trim();
+      if(!userGuess) return;
+
+      if(userGuess === currentWordObj.word) {
+        wordScore += 10;
+        document.getElementById('wordScore').innerText = wordScore;
+        document.getElementById('wordStatus').innerText = "دەستخۆش! وەڵامەکەت ڕاست بوو 🎉 (+10 خاڵ)";
+        document.getElementById('wordStatus').style.color = "#4ade80";
+        setTimeout(nextWord, 1500);
+      } else {
+        document.getElementById('wordStatus').innerText = "وەڵامەکەت هەڵەیە! دووبارە تاقی بکەرەوە ❌";
+        document.getElementById('wordStatus').style.color = "#f87171";
+      }
+    }
+
+    /* --- 5. MEMORY GAME LOGIC --- */
+    const memIcons = ['🦁', '🦅', '☀️', '⛰️', '⚽️', '🚗'];
+    let memCards = [];
+    let flippedCards = [];
+    let memMatches = 0;
+    let memAttempts = 0;
+    let memLockBoard = false;
+
+    function initMemoryGame() {
+      const board = document.getElementById('memoryBoard');
+      board.innerHTML = '';
+      
+      memCards = [...memIcons, ...memIcons].sort(() => Math.random() - 0.5);
+      flippedCards = [];
+      memMatches = 0;
+      memAttempts = 0;
+      memLockBoard = false;
+
+      document.getElementById('memMatches').innerText = '0';
+      document.getElementById('memAttempts').innerText = '0';
+      document.getElementById('memStatus').innerText = "وێنە هاوشێوەکان بدۆزەرەوە!";
+      document.getElementById('memStatus').style.color = "#facc15";
+
+      memCards.forEach((icon, idx) => {
+        const card = document.createElement('div');
+        card.className = 'mem-card';
+        card.dataset.icon = icon;
+        card.dataset.index = idx;
+        card.innerText = '❓';
+        card.onclick = () => flipMemCard(card);
+        board.appendChild(card);
+      });
+    }
+
+    function flipMemCard(card) {
+      if (memLockBoard || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+
+      card.classList.add('flipped');
+      card.innerText = card.dataset.icon;
+      flippedCards.push(card);
+
+      if (flippedCards.length === 2) {
+        memAttempts++;
+        document.getElementById('memAttempts').innerText = memAttempts;
+        checkMemMatch();
+      }
+    }
+
+    function checkMemMatch() {
+      const [c1, c2] = flippedCards;
+
+      if (c1.dataset.icon === c2.dataset.icon) {
+        c1.classList.add('matched');
+        c2.classList.add('matched');
+        memMatches++;
+        document.getElementById('memMatches').innerText = memMatches;
+        flippedCards = [];
+
+        if (memMatches === 6) {
+          document.getElementById('memStatus').innerText = `پیرۆزە! هەموو وێنەکانت دۆزییەوە لە (${memAttempts}) هەوڵدا! 🎉`;
+          document.getElementById('memStatus').style.color = "#4ade80";
+        }
+      } else {
+        memLockBoard = true;
+        setTimeout(() => {
+          c1.classList.remove('flipped');
+          c2.classList.remove('flipped');
+          c1.innerText = '❓';
+          c2.innerText = '❓';
+          flippedCards = [];
+          memLockBoard = false;
+        }, 1000);
+      }
+    }
+
+    /* --- 6. ROCK PAPER SCISSORS LOGIC --- */
+    let rpsPlayerScore = 0;
+    let rpsBotScore = 0;
+    const rpsMap = {
+      rock: { icon: '🪨', beats: 'scissors' },
+      paper: { icon: '📄', beats: 'rock' },
+      scissors: { icon: '✂️', beats: 'paper' }
+    };
+
+    function initRPS() {
+      document.getElementById('rpsPlayerChoice').innerText = '❓';
+      document.getElementById('rpsBotChoice').innerText = '❓';
+      document.getElementById('rpsStatus').innerText = "یەکێک لە بژاردەکان هەڵبژێرە!";
+      document.getElementById('rpsStatus').style.color = "#facc15";
+    }
+
+    function resetRPS() {
+      rpsPlayerScore = 0;
+      rpsBotScore = 0;
+      document.getElementById('rpsPlayerScore').innerText = '0';
+      document.getElementById('rpsBotScore').innerText = '0';
+      initRPS();
+    }
+
+    function playRPS(playerChoice) {
+      const choices = ['rock', 'paper', 'scissors'];
+      const botChoice = choices[Math.floor(Math.random() * choices.length)];
+
+      document.getElementById('rpsPlayerChoice').innerText = rpsMap[playerChoice].icon;
+      document.getElementById('rpsBotChoice').innerText = rpsMap[botChoice].icon;
+
+      const statusEl = document.getElementById('rpsStatus');
+
+      if (playerChoice === botChoice) {
+        statusEl.innerText = "یەکسان بوون! 🤝";
+        statusEl.style.color = "#facc15";
+      } else if (rpsMap[playerChoice].beats === botChoice) {
+        rpsPlayerScore++;
+        document.getElementById('rpsPlayerScore').innerText = rpsPlayerScore;
+        statusEl.innerText = "تۆ بڕیت! 🎉";
+        statusEl.style.color = "#4ade80";
+      } else {
+        rpsBotScore++;
+        document.getElementById('rpsBotScore').innerText = rpsBotScore;
+        statusEl.innerText = "AI بردیەوە! ❌";
+        statusEl.style.color = "#f87171";
+      }
+    }
+
+    /* --- 7. CODEBREAKER / KEY GAME LOGIC --- */
+    let secretCode = [];
+    let currentInput = [];
+    let codeAttempts = 0;
+    let codeGameOver = false;
+
+    function initCodeGame() {
+      secretCode = [];
+      const numbers = [1, 2, 3, 4, 5, 6];
+      for(let i = 0; i < 4; i++) {
+        const randIdx = Math.floor(Math.random() * numbers.length);
+        secretCode.push(numbers.splice(randIdx, 1)[0]);
+      }
+      currentInput = [];
+      codeAttempts = 0;
+      codeGameOver = false;
+
+      document.getElementById('codeAttempts').innerText = '0';
+      document.getElementById('codeStatus').innerText = "کۆدە نهێنییەکەی ٤ ژمارەیی پێشبینی بکە!";
+      document.getElementById('codeStatus').style.color = "#facc15";
+      document.getElementById('codeHistory').innerHTML = '';
+      updateCodeSlots();
+    }
+
+    function pressCodeNum(num) {
+      if(codeGameOver || currentInput.length >= 4) return;
+      if(currentInput.includes(num)) return; // No duplicates allowed
+      currentInput.push(num);
+      updateCodeSlots();
+    }
+
+    function clearCodeInput() {
+      if(codeGameOver) return;
+      currentInput = [];
+      updateCodeSlots();
+    }
+
+    function updateCodeSlots() {
+      for(let i = 0; i < 4; i++) {
+        const slot = document.getElementById(`cslot-${i}`);
+        slot.innerText = currentInput[i] !== undefined ? currentInput[i] : '?';
+      }
+    }
+
+    function submitCodeGuess() {
+      if(codeGameOver) return;
+      if(currentInput.length < 4) {
+        document.getElementById('codeStatus').innerText = "تکایە ٤ ژمارە دیاری بکە!";
+        return;
+      }
+
+      codeAttempts++;
+      document.getElementById('codeAttempts').innerText = codeAttempts;
+
+      let exact = 0;
+      let partial = 0;
+
+      for(let i = 0; i < 4; i++) {
+        if(currentInput[i] === secretCode[i]) {
+          exact++;
+        } else if(secretCode.includes(currentInput[i])) {
+          partial++;
+        }
+      }
+
+      const log = document.getElementById('codeHistory');
+      const guessStr = currentInput.join(' ');
+      const resultItem = document.createElement('div');
+      resultItem.style.marginBottom = "4px";
+      resultItem.innerHTML = `ژمارەکان: <b>${guessStr}</b> ➔ 🟢 ڕاست: ${exact} | 🟡 شوێن هەڵە: ${partial}`;
+      log.prepend(resultItem);
+
+      if(exact === 4) {
+        document.getElementById('codeStatus').innerText = `پیرۆزە! کۆدەکەت بە سەرکەوتوویی شکاند 🔑🎉 (لە هەوڵی ${codeAttempts})`;
+        document.getElementById('codeStatus').style.color = "#4ade80";
+        codeGameOver = true;
+      } else if(codeAttempts >= 8) {
+        document.getElementById('codeStatus').innerText = `دۆڕایت! کۆدە راستەکە ئەمە بوو: [${secretCode.join(', ')}] ❌`;
+        document.getElementById('codeStatus').style.color = "#f87171";
+        codeGameOver = true;
+      } else {
+        document.getElementById('codeStatus').innerText = "تەقەلایەکی تر بکە!";
+      }
+
+      currentInput = [];
+      updateCodeSlots();
+    }
 
     initPuzzle();
   </script>
