@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>یاری مەتەڵی ژمارەکان - Pro Puzzle</title>
+  
+  <!-- ئایکۆنی شاشەی مۆبایل و وێبگەڕ -->
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3081/3081840.png">
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3081/3081840.png">
+
   <style>
     :root {
       --bg-color: #0d1117;
@@ -23,92 +28,69 @@
     }
 
     body {
-      background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+      background: radial-gradient(circle at center, #1e293b, #0f172a);
       color: var(--text-color);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
+      padding: 15px;
     }
 
     .container {
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 24px;
-      padding: 25px;
       width: 100%;
       max-width: 420px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
       text-align: center;
     }
 
     h1 {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
+      margin-bottom: 15px;
       color: var(--accent-color);
-      margin-bottom: 6px;
-      text-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
     }
 
-    p.desc {
-      font-size: 0.85rem;
-      color: #9ca3af;
-      margin-bottom: 20px;
-    }
-
-    .stats-bar {
+    .stats {
       display: flex;
       justify-content: space-between;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 12px 20px;
-      border-radius: 14px;
-      margin-bottom: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .stat-box {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .stat-label {
-      font-size: 0.75rem;
-      color: #9ca3af;
-    }
-
-    .stat-value {
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #facc15;
+      margin-bottom: 15px;
+      background: rgba(0,0,0,0.2);
+      padding: 10px 15px;
+      border-radius: 12px;
+      font-size: 0.95rem;
     }
 
     .board {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(4, 1fr);
       gap: 10px;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 12px;
+      width: 100%;
+      height: 340px;
+      background: rgba(0,0,0,0.3);
+      padding: 10px;
       border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      aspect-ratio: 1;
       margin-bottom: 20px;
     }
 
     .tile {
       background: var(--tile-bg);
-      border-radius: 12px;
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: bold;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 1.4rem;
-      font-weight: bold;
-      color: #fff;
+      border-radius: 12px;
       cursor: pointer;
-      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), 0 4px 10px rgba(0, 0, 0, 0.3);
-      transition: all 0.15s ease-in-out;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      transition: transform 0.1s ease, background 0.2s ease;
+      border: 1px solid rgba(255,255,255,0.05);
     }
 
     .tile:active {
@@ -122,99 +104,89 @@
       cursor: default;
     }
 
-    .tile.correct {
-      border-color: rgba(34, 197, 94, 0.4);
-      color: #4ade80;
-    }
-
-    .controls {
-      display: flex;
-      gap: 10px;
-    }
-
-    .btn {
-      flex: 1;
+    button {
+      width: 100%;
       padding: 12px;
       border: none;
       border-radius: 12px;
-      font-size: 0.95rem;
+      background: var(--accent-color);
+      color: #0f172a;
+      font-size: 1rem;
       font-weight: bold;
       cursor: pointer;
-      transition: all 0.2s ease;
-      color: white;
+      transition: opacity 0.2s ease;
     }
 
-    .btn-primary {
-      background: linear-gradient(135deg, #0284c7, #2563eb);
-      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+    button:active {
+      opacity: 0.8;
     }
 
-    .btn-primary:hover {
-      opacity: 0.9;
-    }
-
-    .win-overlay {
-      position: absolute;
+    .overlay {
+      position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 23, 42, 0.95);
-      border-radius: 24px;
+      background: rgba(0,0,0,0.8);
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s ease;
-      padding: 20px;
+      z-index: 100;
     }
 
-    .win-overlay.show {
+    .overlay.show {
       opacity: 1;
-      pointer-events: all;
+      pointer-events: auto;
     }
 
-    .win-title {
-      font-size: 2rem;
+    .modal {
+      background: #1e293b;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 300px;
+      width: 90%;
+      border: 1px solid var(--accent-color);
+    }
+
+    .modal h2 {
       color: #4ade80;
       margin-bottom: 10px;
+    }
+
+    .modal p {
+      margin-bottom: 20px;
+      font-size: 0.95rem;
     }
   </style>
 </head>
 <body>
 
-  <div class="container" style="position: relative;">
-    <h1>مەتەڵی ژمارەکان 🧩</h1>
-    <p class="desc">ژمارەکان بە ڕێزبەندی 1 تا 15 ڕێکبخەرەوە!</p>
-
-    <div class="stats-bar">
-      <div class="stat-box">
-        <span class="stat-label">جوڵەکان</span>
-        <span class="stat-value" id="moves">0</span>
-      </div>
-      <div class="stat-box">
-        <span class="stat-label">کات</span>
-        <span class="stat-value" id="timer">00:00</span>
-      </div>
+  <div class="container">
+    <h1>یاری مەتەڵی ژمارەکان</h1>
+    
+    <div class="stats">
+      <span>کاتی بەسەرچوو: <b id="timer">00:00</b></span>
+      <span>جوڵەکان: <b id="moves">0</b></span>
     </div>
 
     <div class="board" id="board"></div>
 
-    <div class="controls">
-      <button class="btn btn-primary" id="shuffleBtn">یاری نوێ 🔄</button>
-    </div>
+    <button id="shuffleBtn">تێکەڵکردنەوە و دەستپێک</button>
+  </div>
 
-    <!-- سەرکەوتن -->
-    <div class="win-overlay" id="winOverlay">
-      <div class="win-title">دەستخۆش! 🎉</div>
-      <p style="margin-bottom: 20px; color: #cbd5e1;" id="winDetails">تۆ مەتەڵەکەت چارەسەر کرد!</p>
-      <button class="btn btn-primary" id="restartWinBtn" style="max-width: 200px;">دیسانەوە</button>
+  <div class="overlay" id="winOverlay">
+    <div class="modal">
+      <h2>پیرۆزە! 🎉</h2>
+      <p id="winDetails">تۆ یارییەکەت بردەوە!</p>
+      <button id="restartWinBtn">دوبارە یاری بکەرەوە</button>
     </div>
   </div>
 
   <script>
     const board = document.getElementById('board');
-    const movesDisplay = document.getElementById('moves');
-    const timerDisplay = document.getElementById('timer');
+    const movesEl = document.getElementById('moves');
+    const timerEl = document.getElementById('timer');
     const shuffleBtn = document.getElementById('shuffleBtn');
     const winOverlay = document.getElementById('winOverlay');
     const winDetails = document.getElementById('winDetails');
@@ -222,75 +194,25 @@
 
     let tiles = [];
     let moves = 0;
-    let timer = 0;
     let timerInterval = null;
+    let secondsPassed = 0;
     let isPlaying = false;
 
-    function startTimer() {
-      clearInterval(timerInterval);
-      timer = 0;
-      timerDisplay.innerText = "00:00";
-      timerInterval = setInterval(() => {
-        timer++;
-        const mins = String(Math.floor(timer / 60)).padStart(2, '0');
-        const secs = String(timer % 60).padStart(2, '0');
-        timerDisplay.innerText = `${mins}:${secs}`;
-      }, 1000);
-    }
-
     function initBoard() {
-      tiles = Array.from({ length: 15 }, (_, i) => i + 1);
-      tiles.push(null); // Empty tile
-      shuffleTiles();
+      tiles = Array.from({length: 15}, (_, i) => i + 1);
+      tiles.push(null);
+      render();
     }
 
-    function shuffleTiles() {
-      moves = 0;
-      movesDisplay.innerText = moves;
-      winOverlay.classList.remove('show');
-
-      // Solvable shuffle algorithm
-      do {
-        for (let i = tiles.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
-        }
-      } while (!isSolvable() || isSolved());
-
-      renderBoard();
-      startTimer();
-      isPlaying = true;
-    }
-
-    function isSolvable() {
-      let inversions = 0;
-      const flat = tiles.filter(x => x !== null);
-      for (let i = 0; i < flat.length; i++) {
-        for (let j = i + 1; j < flat.length; j++) {
-          if (flat[i] > flat[j]) inversions++;
-        }
-      }
-      const emptyIndex = tiles.indexOf(null);
-      const emptyRowFromBottom = 4 - Math.floor(emptyIndex / 4);
-      if (emptyRowFromBottom % 2 === 0) {
-        return inversions % 2 !== 0;
-      } else {
-        return inversions % 2 === 0;
-      }
-    }
-
-    function renderBoard() {
+    function render() {
       board.innerHTML = '';
-      tiles.forEach((value, index) => {
+      tiles.forEach((num, index) => {
         const tile = document.createElement('div');
         tile.classList.add('tile');
-        if (value === null) {
+        if (num === null) {
           tile.classList.add('empty');
         } else {
-          tile.innerText = value;
-          if (value === index + 1) {
-            tile.classList.add('correct');
-          }
+          tile.innerText = num;
           tile.onclick = () => moveTile(index);
         }
         board.appendChild(tile);
@@ -298,37 +220,70 @@
     }
 
     function moveTile(index) {
-      if (!isPlaying) return;
-
       const emptyIndex = tiles.indexOf(null);
       const validMoves = [
-        index - 1, // Left
-        index + 1, // Right
-        index - 4, // Up
-        index + 4  // Down
+        index - 1, index + 1,
+        index - 4, index + 4
       ];
 
-      // Handle row boundaries for left/right
-      const isSameRow = Math.floor(index / 4) === Math.floor(emptyIndex / 4);
-      const isAdjacentHorizontal = isSameRow && (Math.abs(index - emptyIndex) === 1);
-      const isAdjacentVertical = Math.abs(index - emptyIndex) === 4;
+      if (validMoves.includes(emptyIndex)) {
+        if ((index % 4 === 0 && emptyIndex === index - 1) || 
+            (index % 4 === 3 && emptyIndex === index + 1)) {
+          return;
+        }
 
-      if (isAdjacentHorizontal || isAdjacentVertical) {
+        if (!isPlaying) startTimer();
+
         [tiles[index], tiles[emptyIndex]] = [tiles[emptyIndex], tiles[index]];
         moves++;
-        movesDisplay.innerText = moves;
-        renderBoard();
-        checkWin();
+        movesEl.innerText = moves;
+        render();
+
+        if (isSolved()) {
+          endGame();
+        }
       }
     }
 
-    function checkWin() {
-      if (isSolved()) {
-        isPlaying = false;
-        clearInterval(timerInterval);
-        winDetails.innerText = `تۆ بە ${moves} جوڵە و لە کاتی ${timerDisplay.innerText} یارییەکەت بردەوە!`;
-        winOverlay.classList.add('show');
+    function startTimer() {
+      isPlaying = true;
+      clearInterval(timerInterval);
+      secondsPassed = 0;
+      timerInterval = setInterval(() => {
+        secondsPassed++;
+        const mins = String(Math.floor(secondsPassed / 60)).padStart(2, '0');
+        const secs = String(secondsPassed % 60).padStart(2, '0');
+        timerEl.innerText = `${mins}:${secs}`;
+      }, 1000);
+    }
+
+    function shuffleTiles() {
+      winOverlay.classList.remove('show');
+      moves = 0;
+      movesEl.innerText = 0;
+      clearInterval(timerInterval);
+      timerEl.innerText = '00:00';
+      isPlaying = false;
+
+      for (let i = 0; i < 200; i++) {
+        const emptyIndex = tiles.indexOf(null);
+        const neighbors = [];
+        if (emptyIndex % 4 > 0) neighbors.push(emptyIndex - 1);
+        if (emptyIndex % 4 < 3) neighbors.push(emptyIndex + 1);
+        if (emptyIndex >= 4) neighbors.push(emptyIndex - 4);
+        if (emptyIndex < 12) neighbors.push(emptyIndex + 4);
+
+        const randomNeighbor = neighbors[Math.floor(Math.random() * neighbors.length)];
+        [tiles[emptyIndex], tiles[randomNeighbor]] = [tiles[randomNeighbor], tiles[emptyIndex]];
       }
+      render();
+    }
+
+    function endGame() {
+      isPlaying = false;
+      clearInterval(timerInterval);
+      winDetails.innerText = `کاتی بەکارھاتوو: ${timerEl.innerText} | ژمارەی جوڵەکان: ${moves}`;
+      winOverlay.classList.add('show');
     }
 
     function isSolved() {
