@@ -5,18 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>یاری مەتەڵی ژمارەکان - Pro Puzzle</title>
   
-  <!-- ئایکۆنی شاشەی مۆبایل و وێبگەڕ -->
-  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3081/3081840.png">
-  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3081/3081840.png">
+  <!-- ئایکۆنی شین و پێشکەوتووی دیزاینە کۆنەکە -->
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2382/2382461.png">
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2382/2382461.png">
 
   <style>
     :root {
-      --bg-color: #0d1117;
-      --card-bg: rgba(22, 27, 34, 0.8);
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+      --card-bg: rgba(30, 41, 59, 0.75);
       --accent-color: #38bdf8;
-      --tile-bg: linear-gradient(145deg, #1f293d, #111827);
+      --accent-glow: rgba(56, 189, 248, 0.35);
+      --tile-bg: linear-gradient(145deg, #1e293b, #0f172a);
       --tile-hover: linear-gradient(145deg, #2563eb, #1d4ed8);
-      --text-color: #f3f4f6;
+      --text-color: #f8fafc;
     }
 
     * {
@@ -28,7 +29,7 @@
     }
 
     body {
-      background: radial-gradient(circle at center, #1e293b, #0f172a);
+      background: var(--bg-gradient);
       color: var(--text-color);
       min-height: 100vh;
       display: flex;
@@ -41,60 +42,64 @@
       width: 100%;
       max-width: 420px;
       background: var(--card-bg);
-      padding: 20px;
-      border-radius: 24px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.1);
-      backdrop-filter: blur(10px);
+      padding: 24px;
+      border-radius: 28px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 20px var(--accent-glow);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(16px);
       text-align: center;
     }
 
     h1 {
-      font-size: 1.5rem;
-      margin-bottom: 15px;
+      font-size: 1.6rem;
+      margin-bottom: 18px;
       color: var(--accent-color);
+      text-shadow: 0 0 10px var(--accent-glow);
     }
 
     .stats {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 15px;
-      background: rgba(0,0,0,0.2);
-      padding: 10px 15px;
-      border-radius: 12px;
+      margin-bottom: 20px;
+      background: rgba(15, 23, 42, 0.6);
+      padding: 12px 18px;
+      border-radius: 16px;
       font-size: 0.95rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .board {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       grid-template-rows: repeat(4, 1fr);
-      gap: 10px;
+      gap: 12px;
       width: 100%;
-      height: 340px;
-      background: rgba(0,0,0,0.3);
-      padding: 10px;
-      border-radius: 16px;
+      height: 350px;
+      background: rgba(15, 23, 42, 0.5);
+      padding: 12px;
+      border-radius: 20px;
       margin-bottom: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .tile {
       background: var(--tile-bg);
       color: #fff;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       font-weight: bold;
       display: flex;
       justify-content: center;
       align-items: center;
-      border-radius: 12px;
+      border-radius: 14px;
       cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-      transition: transform 0.1s ease, background 0.2s ease;
-      border: 1px solid rgba(255,255,255,0.05);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .tile:active {
-      transform: scale(0.95);
+      transform: scale(0.92);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
     }
 
     .tile.empty {
@@ -106,25 +111,27 @@
 
     button {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       border: none;
-      border-radius: 12px;
-      background: var(--accent-color);
-      color: #0f172a;
-      font-size: 1rem;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #38bdf8 0%, #2563eb 100%);
+      color: #fff;
+      font-size: 1.05rem;
       font-weight: bold;
       cursor: pointer;
-      transition: opacity 0.2s ease;
+      box-shadow: 0 10px 20px -5px var(--accent-glow);
+      transition: all 0.2s ease;
     }
 
     button:active {
-      opacity: 0.8;
+      transform: scale(0.97);
+      opacity: 0.9;
     }
 
     .overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.8);
+      background: rgba(15, 23, 42, 0.85);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -132,6 +139,7 @@
       pointer-events: none;
       transition: opacity 0.3s ease;
       z-index: 100;
+      backdrop-filter: blur(8px);
     }
 
     .overlay.show {
@@ -142,20 +150,21 @@
     .modal {
       background: #1e293b;
       padding: 30px;
-      border-radius: 20px;
+      border-radius: 24px;
       text-align: center;
-      max-width: 300px;
+      max-width: 320px;
       width: 90%;
       border: 1px solid var(--accent-color);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
     }
 
     .modal h2 {
       color: #4ade80;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .modal p {
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       font-size: 0.95rem;
     }
   </style>
